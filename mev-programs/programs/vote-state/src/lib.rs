@@ -268,7 +268,7 @@ impl From<Lockout> for LandedVote {
 
 impl VoteState {
     pub fn deserialize(account_info: &AccountInfo) -> Result<Box<Self>> {
-        if account_info.owner != &solana_program::vote::program::id() {
+        if account_info.owner != &anchor_lang::solana_program::vote::program::id() {
             return Err(ConstraintOwner.into());
         }
 
