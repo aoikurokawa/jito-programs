@@ -25,9 +25,10 @@ jobs:
       - name: Install yarn dependencies
         working-directory: ./mev-programs
         run: yarn
-      - name: Install latest stable
-        uses: actions-rs/toolchain@v1
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
+          cache-workspaces:
+            ./mev-programs/
           components: rustfmt, clippy
       - name: clippy
         working-directory: ./mev-programs
@@ -53,7 +54,6 @@ jobs:
           cache-workspaces:
             ./mev-programs/
           components: rustfmt, clippy
-          toolchain: nightly-2024-11-22
       - name: Install cargo-sort from crates.io
         uses: baptiste0928/cargo-install@v3
         with:
@@ -83,7 +83,7 @@ jobs:
         with:
           crate: anchor-cli
           git: https://github.com/coral-xyz/anchor
-          tag: v0.31.1
+          tag: v1.2.1
       - name: Install cargo-nextest
         uses: baptiste0928/cargo-install@v3
         with:
@@ -94,13 +94,13 @@ jobs:
         run: yarn
       - name: Build jito_tip_distribution
         working-directory: ./mev-programs
-        run: RUSTUP_TOOLCHAIN=nightly-2025-04-16 anchor build --idl idl --program-name jito_tip_distribution -- --features jito-tip-distribution/mainnet
+        run: anchor build --idl idl --program-name jito_tip_distribution -- --features jito-tip-distribution/mainnet
       - name: Build jito_tip_payment
         working-directory: ./mev-programs
-        run: RUSTUP_TOOLCHAIN=nightly-2025-04-16 anchor build --idl idl --program-name jito_tip_payment
+        run: anchor build --idl idl --program-name jito_tip_payment
       - name: Build jito_priority_fee_distribution
         working-directory: ./mev-programs
-        run: RUSTUP_TOOLCHAIN=nightly-2025-04-16 anchor build --idl idl --program-name jito_priority_fee_distribution
+        run: anchor build --idl idl --program-name jito_priority_fee_distribution
 
       # Make sure no uncommitted changes
       - name: Check for diff
@@ -121,7 +121,7 @@ jobs:
           cp programs/priority-fee-distribution/idl/*.json target/idl/
       - name: Run Anchor test
         working-directory: ./mev-programs
-        run: RUSTUP_TOOLCHAIN=nightly-2025-04-16 anchor test --skip-build
+        run: anchor test --skip-build
 
   verified_build:
     name: verified_build
