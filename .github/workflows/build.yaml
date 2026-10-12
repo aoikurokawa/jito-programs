@@ -94,13 +94,13 @@ jobs:
         run: yarn
       - name: Build jito_tip_distribution
         working-directory: ./mev-programs
-        run: anchor build --idl idl --program-name jito_tip_distribution -- --arch v3 --features jito-tip-distribution/mainnet
+        run: anchor build --idl idl --arch v3 --program-name jito_tip_distribution -- --features jito-tip-distribution/mainnet
       - name: Build jito_tip_payment
         working-directory: ./mev-programs
-        run: anchor build --idl idl --program-name jito_tip_payment -- --arch v3
+        run: anchor build --idl idl --arch v3 --program-name jito_tip_payment
       - name: Build jito_priority_fee_distribution
         working-directory: ./mev-programs
-        run: anchor build --idl idl --program-name jito_priority_fee_distribution -- --arch v3
+        run: anchor build --idl idl --arch v3 --program-name jito_priority_fee_distribution
 
       # Make sure no uncommitted changes
       - name: Check for diff
@@ -145,11 +145,11 @@ jobs:
       - name: Verifiable Build
         working-directory: ./mev-programs
         run: |
-          solana-verify build --library-name jito_tip_distribution --base-image solanafoundation/solana-verifiable-build:4.3.0 -- --arch v3 --features jito-tip-distribution/mainnet
+          solana-verify build --arch v3 --library-name jito_tip_distribution --base-image solanafoundation/solana-verifiable-build:4.3.0 -- --features jito-tip-distribution/mainnet
           sudo mv target/deploy/jito_tip_distribution.so target/deploy/jito_tip_distribution-mainnet.so
-          solana-verify build --library-name jito_tip_payment --base-image solanafoundation/solana-verifiable-build:4.3.0 -- --arch v3
-          solana-verify build --library-name jito_priority_fee_distribution --base-image solanafoundation/solana-verifiable-build:4.3.0 -- --arch v3
-          solana-verify build --library-name jito_tip_distribution --base-image solanafoundation/solana-verifiable-build:4.3.0 -- --arch v3
+          solana-verify build --arch v3 --library-name jito_tip_payment --base-image solanafoundation/solana-verifiable-build:4.3.0
+          solana-verify build --arch v3 --library-name jito_priority_fee_distribution --base-image solanafoundation/solana-verifiable-build:4.3.0
+          solana-verify build --arch v3 --library-name jito_tip_distribution --base-image solanafoundation/solana-verifiable-build:4.3.0
           sudo mv target/deploy/jito_tip_distribution.so target/deploy/jito_tip_distribution-testnet.so
 
       - name: Upload Artifact
