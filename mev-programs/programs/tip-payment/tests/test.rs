@@ -11,8 +11,8 @@ mod tests {
         TIP_ACCOUNT_SEED_0, TIP_ACCOUNT_SEED_1, TIP_ACCOUNT_SEED_2, TIP_ACCOUNT_SEED_3,
         TIP_ACCOUNT_SEED_4, TIP_ACCOUNT_SEED_5, TIP_ACCOUNT_SEED_6, TIP_ACCOUNT_SEED_7,
     };
-    use solana_program_test::{BanksClient, ProgramTest, ProgramTestContext};
     use solana_commitment_config::CommitmentLevel;
+    use solana_program_test::{BanksClient, ProgramTest, ProgramTestContext};
     use solana_sdk::{
         account::{Account, ReadableAccount},
         hash::Hash,
