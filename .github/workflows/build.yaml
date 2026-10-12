@@ -75,7 +75,7 @@ jobs:
           cache-workspaces:
             ./mev-programs/
       - name: install solana toolsuite
-        run: sh -c "$(curl -sSfL https://release.anza.xyz/v2.2.13/install)"
+        run: sh -c "$(curl -sSfL https://release.anza.xyz/v4.3.0/install)"
       - name: add to path
         run: echo "/home/runner/.local/share/solana/install/active_release/bin" >> $GITHUB_PATH
       - name: Install anchor
@@ -130,7 +130,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: recursive
-      - run: docker pull --platform linux/amd64 solanafoundation/solana-verifiable-build:2.2.13
+      - run: docker pull --platform linux/amd64 solanafoundation/solana-verifiable-build:4.3.0
       - uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
           cache-workspaces:
@@ -145,11 +145,11 @@ jobs:
       - name: Verifiable Build
         working-directory: ./mev-programs
         run: |
-          solana-verify build --library-name jito_tip_distribution --base-image solanafoundation/solana-verifiable-build:2.2.13 -- --features jito-tip-distribution/mainnet
+          solana-verify build --library-name jito_tip_distribution --base-image solanafoundation/solana-verifiable-build:4.3.0 -- --features jito-tip-distribution/mainnet
           sudo mv target/deploy/jito_tip_distribution.so target/deploy/jito_tip_distribution-mainnet.so
-          solana-verify build --library-name jito_tip_payment --base-image solanafoundation/solana-verifiable-build:2.2.13
-          solana-verify build --library-name jito_priority_fee_distribution --base-image solanafoundation/solana-verifiable-build:2.2.13
-          solana-verify build --library-name jito_tip_distribution --base-image solanafoundation/solana-verifiable-build:2.2.13
+          solana-verify build --library-name jito_tip_payment --base-image solanafoundation/solana-verifiable-build:4.3.0
+          solana-verify build --library-name jito_priority_fee_distribution --base-image solanafoundation/solana-verifiable-build:4.3.0
+          solana-verify build --library-name jito_tip_distribution --base-image solanafoundation/solana-verifiable-build:4.3.0
           sudo mv target/deploy/jito_tip_distribution.so target/deploy/jito_tip_distribution-testnet.so
 
       - name: Upload Artifact
@@ -187,7 +187,7 @@ jobs:
         with:
           crate: anchor-cli
           git: https://github.com/coral-xyz/anchor
-          tag: v0.31.1
+          tag: v1.2.1
       - name: Anchor Login
         if: startsWith(github.ref, 'refs/tags/')
         working-directory: ./mev-programs
