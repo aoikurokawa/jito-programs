@@ -1279,7 +1279,12 @@ const setup_initTipDistributionAccount = async () => {
     }
 
     // Fetch epoch info and derive TipDistributionAccount PDA.
-    const epochInfo = await provider.connection.getEpochInfo("confirmed");
+    // Skip the tail of the epoch so it can't roll over before the init tx lands.
+    let epochInfo = await provider.connection.getEpochInfo("confirmed");
+    while (epochInfo.slotsInEpoch - epochInfo.slotIndex < 10) {
+        await sleep(400);
+        epochInfo = await provider.connection.getEpochInfo("confirmed");
+    }
     const epoch = new anchor.BN(epochInfo.epoch).toArrayLike(Buffer, "le", 8);
     const [tipDistributionAccount, bump] =
         anchor.web3.PublicKey.findProgramAddressSync(
